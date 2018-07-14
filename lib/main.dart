@@ -11,55 +11,6 @@ class MatchingScreen extends StatefulWidget {
   _State createState() => _State();
 }
 
-class WaitingScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('RodFaiFahMaHaNaTel2 ❤'),
-      ),
-      body: Center(
-        child: new Column(
-          children: <Widget>[
-            Text(''),
-            Text(
-              'คู่ของคุณอยู่ที่สถานี',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Image.asset('images/test.png', scale: 0.5),
-            Text(
-              'จุดนัดพบสถานี',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              '" อารีย์ "',
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.green,
-              ),
-            ),
-            Text(''),
-            new RaisedButton(
-              child: Text('ยกเลิก'),
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MatchingScreen()),
-                );
-              },
-            )
-          ],
-        ),
-      )
-    );
-  }
-}
-
 class _State extends State<MatchingScreen> {
   String _value = null;
   List<String> _values = new List<String>();
@@ -78,8 +29,6 @@ class _State extends State<MatchingScreen> {
     });
   }
   Widget build(BuildContext context) {
-
-
     Column buildButtonColumn(String label) {
       return Column(
         children: [
@@ -157,6 +106,61 @@ class _State extends State<MatchingScreen> {
   }
 }
 
+class WaitingScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
+    String blankLine = '';
+    String detail1 = 'คู่ของคุณอยู่ที่สถานี';
+    String detail2 = 'จุดนัดพบสถานี';
+    String stationName = '" อารีย์ "';
+
+    TextStyle titleStyle = new TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+    );
+    
+    TextStyle detailStyle = new TextStyle(
+      fontWeight: FontWeight.bold,
+    );
+
+    TextStyle stationStyle = new TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+      color: Colors.green,
+    );
+
+    Widget buttonCancel = new RaisedButton(
+      child: Text('ยกเลิก'),
+      onPressed: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MatchingScreen()),
+        );
+      },
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(appTitle),
+      ),
+      body: Center(
+        child: new Column(
+          children: [
+            Text(blankLine),
+            Text(detail1, style: titleStyle),
+            Image.asset('images/test.png', scale: 0.5),
+            Text(detail2, style: detailStyle),
+            Text(stationName, style: stationStyle),
+            Text(blankLine),
+            buttonCancel
+          ],
+        ),
+      )
+    );
+  }
+}
+
 class ConfirmScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -183,7 +187,7 @@ class ConfirmScreen extends StatelessWidget {
       onPressed: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ResultScreen()),
+          MaterialPageRoute(builder: (context) => WaitingScreen()),
         );
       },
     );
