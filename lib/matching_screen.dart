@@ -48,13 +48,13 @@ class _MatchingScreenState extends State<MatchingScreen> {
 
   Widget build(BuildContext context) {
     String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
-    String blankLine = '';
     String detail1 = 'ตอนนี้คุณอยู่สถานี';
     String stationName = '" สยาม "';
     String detail2 = 'เลือกสถานีปลายทาง';
 
     Widget buttonAccept = new RaisedButton(
       child: Text('จับคู่'),
+      color: Colors.blue,
       onPressed: (){
         Navigator.push(
           context,
@@ -66,11 +66,11 @@ class _MatchingScreenState extends State<MatchingScreen> {
     TextStyle stationStyle = new TextStyle(
       fontSize: 36.0,
       fontWeight: FontWeight.bold,
-      color: Colors.green,
+      color: Colors.blue,
     );
 
     TextStyle detailStyle = new TextStyle(
-      fontSize: 28.0,
+      fontSize: 32.0,
     );
 
     Widget dropDownStation = new DropdownButton(
@@ -101,19 +101,26 @@ class _MatchingScreenState extends State<MatchingScreen> {
                 child: new Column(
                   children: [
                     Container(
-                      margin: new EdgeInsets.only(top: 60.0),
+                      margin: new EdgeInsets.only(top: 30.0),
                     ),
                     Text(detail1, style: detailStyle),
                     Text(stationName, style: stationStyle),
                     Container(
-                      margin: new EdgeInsets.only(top: 20.0),
+                      margin: new EdgeInsets.only(top: 40.0),
                     ),
                     Text(detail2, style: detailStyle),
                     dropDownStation,
-                    buttonAccept
                   ],
                 ),
               ),
+            ),
+            Container(
+              margin: new EdgeInsets.only(top: 10.0),
+            ),
+            new ButtonTheme(
+              minWidth: double.infinity,
+              height: 45.0,
+              child: buttonAccept,
             )
           ],
         )
