@@ -35,9 +35,10 @@ class _WaitingScreenState extends State<WaitingScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: new Text('การแลกเปลี่ยนสำเร็จ'),
+            content: new Text('ขอบคุณที่ใช้บริการ'),
             actions: <Widget>[
               new FlatButton(
-                child: new Text('กลับหน้าหลัก'),
+                child: new Text('ปิด'),
                 onPressed: (){
                   Navigator.push(
                     context,
@@ -45,12 +46,6 @@ class _WaitingScreenState extends State<WaitingScreen> {
                   );
                 },
               ),
-              new FlatButton(
-                child: new Text('ปิด'),
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-              )
             ],
           );
         }
@@ -118,7 +113,12 @@ class _WaitingScreenState extends State<WaitingScreen> {
                       margin: new EdgeInsets.only(top: 5.0),
                     ),
                     Text(detail1, style: textStyle),
-                    Image.asset('images/test.png', height: 200.0),
+                    new GestureDetector(
+                      onTap: () => mapUtil.showMap(mapView),
+                      child: new Center(
+                        child: new Image.asset('images/test.png', height: 200.0),
+                      ),
+                    ),
                     Text(detail2, style: textStyle),
                     Text(stationName, style: stationStyle),
                   ],
