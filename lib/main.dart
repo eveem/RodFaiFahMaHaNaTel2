@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(new MaterialApp(
-    home: new HomeScreen(),
+    home: new MatchingScreen(),
   ));
 }
 
-class HomeScreen extends StatefulWidget {
+class MatchingScreen extends StatefulWidget {
   @override
   _State createState() => _State();
 }
 
-class WaitScreen extends StatelessWidget {
+class WaitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +47,10 @@ class WaitScreen extends StatelessWidget {
             new RaisedButton(
               child: Text('ยกเลิก'),
               onPressed: (){
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MatchingScreen()),
+                );
               },
             )
           ],
@@ -57,7 +60,7 @@ class WaitScreen extends StatelessWidget {
   }
 }
 
-class _State extends State<HomeScreen> {
+class _State extends State<MatchingScreen> {
   String _value = null;
   List<String> _values = new List<String>();
 
@@ -114,7 +117,7 @@ class _State extends State<HomeScreen> {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WaitScreen()),
+                  MaterialPageRoute(builder: (context) => WaitingScreen()),
                 );
               },
             )
