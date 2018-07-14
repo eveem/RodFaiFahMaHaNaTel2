@@ -30,7 +30,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   Widget build(BuildContext context) {
     String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
     String text1 = 'จุดนัดพบอยู่ที่สถานี';
-    String text2 = widget.station;
+    String text2 = '\" ${widget.station} \"';
     String text3 = 'คุณประหยัดไปได้';
     String text4 = '${widget.price} บาท';
     

@@ -68,8 +68,8 @@ class _MatchingScreenState extends State<MatchingScreen> {
     var response = await client.get(url);
 
     if (response.statusCode == 200) {
-      print(this.source);
-      print(destination);
+      print("source: ${this.source}");
+      print("destination: ${destination}");
 
       Navigator.push(
         context,
