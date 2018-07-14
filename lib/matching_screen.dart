@@ -1,8 +1,7 @@
-import "dart:async";
-
-import "package:flutter/material.dart";
-import "package:RodFaiFah/confirm_screen.dart";
-import "package:http/http.dart" as http;
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:RodFaiFah/confirm_screen.dart';
+import 'package:http/http.dart' as http;
 
 class MatchingScreen extends StatefulWidget {
   @override
@@ -104,24 +103,30 @@ class _MatchingScreenState extends State<MatchingScreen> {
 
   Widget build(BuildContext context) {
     String appTitle = "RodFaiFahMaHaNaTel2 ❤";
-    String blankLine = "";
     String detail1 = "ตอนนี้คุณอยู่สถานี";
     String stationName = "\" ${source} \"";
     String detail2 = "เลือกสถานีปลายทาง";
 
+    TextStyle buttonConfirmTextStyle = new TextStyle (
+      fontSize: 20.0,
+      fontWeight: FontWeight.w400,
+      color: Colors.white,
+    );
+
     Widget buttonAccept = new RaisedButton(
-      child: Text("จับคู่"),
+      child: Text('จับคู่', style: buttonConfirmTextStyle),
+      color: Colors.blue,
       onPressed: (){ getMatching(destination); },
     );
 
     TextStyle stationStyle = new TextStyle(
       fontSize: 36.0,
       fontWeight: FontWeight.bold,
-      color: Colors.green,
+      color: Colors.blue,
     );
 
     TextStyle detailStyle = new TextStyle(
-      fontSize: 28.0,
+      fontSize: 32.0,
     );
 
     Widget dropDownStation = new DropdownButton(
@@ -152,19 +157,26 @@ class _MatchingScreenState extends State<MatchingScreen> {
                 child: new Column(
                   children: [
                     Container(
-                      margin: new EdgeInsets.only(top: 60.0),
+                      margin: new EdgeInsets.only(top: 30.0),
                     ),
                     Text(detail1, style: detailStyle),
                     Text(stationName, style: stationStyle),
                     Container(
-                      margin: new EdgeInsets.only(top: 20.0),
+                      margin: new EdgeInsets.only(top: 40.0),
                     ),
                     Text(detail2, style: detailStyle),
                     dropDownStation,
-                    buttonAccept
                   ],
                 ),
               ),
+            ),
+            Container(
+              margin: new EdgeInsets.only(top: 10.0),
+            ),
+            new ButtonTheme(
+              minWidth: double.infinity,
+              height: 45.0,
+              child: buttonAccept,
             )
           ],
         )
