@@ -46,13 +46,13 @@ class _State extends State<MatchingScreen> {
     );
 
     TextStyle stationStyle = new TextStyle(
-      fontSize: 20.0,
+      fontSize: 36.0,
       fontWeight: FontWeight.bold,
       color: Colors.green,
     );
 
     TextStyle detailStyle = new TextStyle(
-      fontWeight: FontWeight.bold,
+      fontSize: 28.0,
     );
 
     Widget dropDownStation = new DropdownButton(
@@ -74,19 +74,32 @@ class _State extends State<MatchingScreen> {
       appBar: new AppBar(
         title: new Text(appTitle),
       ),
-      body: Center(
+      body: Container(
+        margin: new EdgeInsets.all(20.0),
         child: new Column(
-          children: <Widget>[
-            Text(blankLine),
-            Text(detail1, style: detailStyle),
-            Text(stationName, style: stationStyle),
-            Text(blankLine),
-            Text(detail2, style: detailStyle),
-            dropDownStation,
-            buttonAccept
+          children: [
+            Expanded(
+              child: new Card(
+                child: new Column(
+                  children: [
+                    Container(
+                      margin: new EdgeInsets.only(top: 60.0),
+                    ),
+                    Text(detail1, style: detailStyle),
+                    Text(stationName, style: stationStyle),
+                    Container(
+                      margin: new EdgeInsets.only(top: 20.0),
+                    ),
+                    Text(detail2, style: detailStyle),
+                    dropDownStation,
+                    buttonAccept
+                  ],
+                ),
+              ),
+            )
           ],
-        ),
-      )
+        )
+      ),
     );
   }
 }
@@ -158,7 +171,7 @@ class ConfirmScreen extends StatelessWidget {
     TextStyle appTitleStyle = new TextStyle (
       fontSize: 20.0,
       fontWeight: FontWeight.w400,
-      color: Colors.blue,
+      color: Colors.white,
     );
 
     TextStyle appTextStyle = new TextStyle (
