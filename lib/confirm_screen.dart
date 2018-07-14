@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:RodFaiFah/matching_screen.dart';
 import 'package:RodFaiFah/waiting_screen.dart';
 
-class ConfirmScreen extends StatelessWidget {
+class ConfirmScreen extends StatefulWidget {
+  @override
+  _ConfirmScreenState createState() => _ConfirmScreenState();
+}
+
+class _ConfirmScreenState extends State<ConfirmScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
@@ -50,7 +60,7 @@ class ConfirmScreen extends StatelessWidget {
       onPressed: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => WaitingScreen()),
+          MaterialPageRoute(builder: (context) => new WaitingScreen()),
         );
       },
     );

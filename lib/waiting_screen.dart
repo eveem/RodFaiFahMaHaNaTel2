@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/matching_screen.dart';
 
-class WaitingScreen extends StatelessWidget {
+class WaitingScreen extends StatefulWidget {
+  @override
+  _WaitingScreenState createState() => _WaitingScreenState();
+}
+
+class _WaitingScreenState extends State<WaitingScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     String appTitle = 'RodFaiFahMaHaNaTel2 ❤';

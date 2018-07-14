@@ -3,10 +3,10 @@ import 'package:RodFaiFah/confirm_screen.dart';
 
 class MatchingScreen extends StatefulWidget {
   @override
-  _State createState() => _State();
+  _MatchingScreenState createState() => _MatchingScreenState();
 }
 
-class _State extends State<MatchingScreen> {
+class _MatchingScreenState extends State<MatchingScreen> {
   @override
   List<String> _values = new List<String>();
   String _value = null;
@@ -35,7 +35,7 @@ class _State extends State<MatchingScreen> {
       onPressed: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ConfirmScreen()),
+          MaterialPageRoute(builder: (context) => new ConfirmScreen()),
         );
       },
     );
