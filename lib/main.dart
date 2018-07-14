@@ -2,35 +2,62 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(new MaterialApp(
-    home: new FirstScreen(),
+    home: new HomeScreen(),
   ));
 }
 
-class FirstScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
   _State createState() => _State();
 }
 
-class ResultScreen extends StatelessWidget {
+class WaitScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Screen"),
+        title: Text('RodFaiFahMaHaNaTel2 ❤'),
       ),
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('ยกเลิก'),
+        child: new Column(
+          children: <Widget>[
+            Text(''),
+            Text(
+              'คู่ของคุณอยู่ที่สถานี',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Image.asset('images/test.png', scale: 0.5),
+            Text(
+              'จุดนัดพบสถานี',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              '" อารีย์ "',
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.green,
+              ),
+            ),
+            Text(''),
+            new RaisedButton(
+              child: Text('ยกเลิก'),
+              onPressed: (){
+                Navigator.pop(context);
+              },
+            )
+          ],
         ),
-      ),
+      )
     );
   }
 }
 
-class _State extends State<FirstScreen> {
+class _State extends State<HomeScreen> {
   String _value = null;
   List<String> _values = new List<String>();
 
@@ -52,10 +79,10 @@ class _State extends State<FirstScreen> {
       appBar: new AppBar(
         title: new Text('RodFaiFahMaHaNaTel2 ❤'),
       ),
-      body: new Container(
-        padding: new EdgeInsets.all(32.0),
+      body: Center(
         child: new Column(
           children: <Widget>[
+            Text(''),
             Text(
               'ตอนนี้คุณอยู่สถานี',
             ),
@@ -87,7 +114,7 @@ class _State extends State<FirstScreen> {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ResultScreen()),
+                  MaterialPageRoute(builder: (context) => WaitScreen()),
                 );
               },
             )
