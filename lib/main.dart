@@ -2,16 +2,35 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(new MaterialApp(
-    home: new RFF(),
+    home: new FirstScreen(),
   ));
 }
 
-class RFF extends StatefulWidget {
+class FirstScreen extends StatefulWidget {
   @override
   _State createState() => _State();
 }
 
-class _State extends State<RFF> {
+class ResultScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Screen"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('ยกเลิก'),
+        ),
+      ),
+    );
+  }
+}
+
+class _State extends State<FirstScreen> {
   String _value = null;
   List<String> _values = new List<String>();
 
@@ -63,6 +82,15 @@ class _State extends State<RFF> {
               }).toList(),
               onChanged: (String value){_onChange(value);},
             ),
+            new RaisedButton(
+              child: const Text('จับคู่'),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ResultScreen()),
+                );
+              },
+            )
           ],
         ),
       )
