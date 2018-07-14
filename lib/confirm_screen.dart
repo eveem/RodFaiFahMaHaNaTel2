@@ -3,11 +3,17 @@ import 'package:RodFaiFah/matching_screen.dart';
 import 'package:RodFaiFah/waiting_screen.dart';
 
 class ConfirmScreen extends StatefulWidget {
-  final String name;
+  final String sid;
+  final String did;
+  final String station;
+  final int price;
 
   ConfirmScreen({
     Key key,
-    this.name
+    this.sid,
+    this.did,
+    this.station,
+    this.price,
   }) : super(key: key);
 
   @override
@@ -24,9 +30,9 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   Widget build(BuildContext context) {
     String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
     String text1 = 'จุดนัดพบอยู่ที่สถานี';
-    String text2 = widget.name;
+    String text2 = widget.station;
     String text3 = 'คุณประหยัดไปได้';
-    String text4 = '58 บาท';
+    String text4 = '${widget.price} บาท';
     
     TextStyle appTitleStyle = new TextStyle (
       fontSize: 20.0,

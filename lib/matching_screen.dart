@@ -1,9 +1,8 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/material.dart';
-import 'package:RodFaiFah/confirm_screen.dart';
-import 'package:http/http.dart' as http;
-
+import "package:flutter/material.dart";
+import "package:RodFaiFah/confirm_screen.dart";
+import "package:http/http.dart" as http;
 
 class MatchingScreen extends StatefulWidget {
   @override
@@ -11,56 +10,108 @@ class MatchingScreen extends StatefulWidget {
 }
 
 class _MatchingScreenState extends State<MatchingScreen> {
-  List<String> _values;
-  String _value;
+  List<String> stations;
+  String destination;
+  String source;
   
   @override
   void initState() {
     super.initState();
-    _values = new List<String>();
-    _values.addAll(["หมอชิต", "สะพานควาย", "อารีย์", "สนามเป้า", "อนุสาวรีย์ชัยสมรภูมิ", "พญาไท", "ราชเทวี",
-                    "สยาม", "ชิดลม", "เพลินจิต", "นานา", "อโศก", "พร้อมพงษ์", "ทองหล่อ", "เอกมัย", "พระโขนง",
-                    "อ่อนนุช", "บางจาก", "ปุณณวิถี", "อุดมสุข", "บางนา", "แบริ่ง", "สำโรง", "สนามกีฬาแห่งชาติ", "ราชดำริ",
-                    "ศาลาแดง", "ช่องนนทรี", "สุรศักดิ์", "สะพานตากสิน", "กรุงธนบุรี", "วงเวียนใหญ่"]);
+    stations = new List<String>();
+    stations.addAll([
+      "หมอชิต",
+      "สะพานควาย",
+      "อารีย์",
+      "สนามเป้า",
+      "อนุสาวรีย์ชัยสมรภูมิ",
+      "พญาไท",
+      "ราชเทวี",
+      "สยาม",
+      "ชิดลม",
+      "เพลินจิต",
+      "นานา",
+      "อโศก",
+      "พร้อมพงษ์",
+      "ทองหล่อ",
+      "เอกมัย",
+      "พระโขนง",
+      "อ่อนนุช",
+      "บางจาก",
+      "ปุณณวิถี",
+      "อุดมสุข",
+      "บางนา",
+      "แบริ่ง",
+      "สำโรง",
+      "สนามกีฬาแห่งชาติ",
+      "ราชดำริ",
+      "ศาลาแดง",
+      "ช่องนนทรี",
+      "สุรศักดิ์",
+      "สะพานตากสิน",
+      "กรุงธนบุรี",
+      "วงเวียนใหญ่",
+    ]);
     
-    _value = _values.elementAt(0);
+    destination = stations.elementAt(0);
+    source = "อุดมสุข";
   }
 
   void _onChange(String value) {
     setState(() {
-      _value = value;      
+      destination = value;      
     });
   }
 
-  Future<dynamic> healthcheck() async {
-    final url = 'http://192.168.1.96:3001/api/healthcheck';
+  void getMatching(String destination) async {
+    final url = "http://192.168.1.96:3001/api/healthcheck";
+    // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
     var client = new http.Client();
-
     var response = await client.get(url);
-    print(response.statusCode);
 
-    setState(() {
-      _value = 'บางจาก';      
-    });
+    if (response.statusCode == 200) {
+      print(this.source);
+      print(destination);
 
-    return response;
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => new ConfirmScreen(
+          sid: "2",
+          did: "3",
+          station: "อโศก", 
+          price: 43
+        )),
+      );
+    }
+  }
+
+  Future<dynamic> setStation() async {
+    print('setStation');
+    
+    final url = "http://192.168.1.96:3001/api/healthcheck";
+    // final url = "http://localhost:3001/tracking";
+    var client = new http.Client();
+    var response = await client.post(url, body: { "id": 1, "station": "อโศก" });
+
+    if (response.statusCode == 200) {
+      print(source);
+      print(destination);
+
+      setState(() {
+        source = "อโศก";
+      });
+    }
   }
 
   Widget build(BuildContext context) {
-    String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
-    String blankLine = '';
-    String detail1 = 'ตอนนี้คุณอยู่สถานี';
-    String stationName = '" สยาม "';
-    String detail2 = 'เลือกสถานีปลายทาง';
+    String appTitle = "RodFaiFahMaHaNaTel2 ❤";
+    String blankLine = "";
+    String detail1 = "ตอนนี้คุณอยู่สถานี";
+    String stationName = "\" ${source} \"";
+    String detail2 = "เลือกสถานีปลายทาง";
 
     Widget buttonAccept = new RaisedButton(
-      child: Text('จับคู่'),
-      onPressed: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => new ConfirmScreen(name: _value)),
-        );
-      },
+      child: Text("จับคู่"),
+      onPressed: (){ getMatching(destination); },
     );
 
     TextStyle stationStyle = new TextStyle(
@@ -74,19 +125,19 @@ class _MatchingScreenState extends State<MatchingScreen> {
     );
 
     Widget dropDownStation = new DropdownButton(
-      value: _value,
-      items: _values.map((String value){
+      value: destination,
+      items: stations.map((String name){
       return new DropdownMenuItem(
-        value: value,
+        value: name,
         child: new Row(
         children: <Widget>[
                   new Icon(Icons.train),
-                  new Text('   สถานี${value}')
+                  new Text("   สถานี${name}")
                   ],
                 ),
       );
     }).toList(),
-        onChanged: (String value){_onChange(value);},
+        onChanged: (String value){ _onChange(value); },
     );
     return new Scaffold(
       appBar: new AppBar(
