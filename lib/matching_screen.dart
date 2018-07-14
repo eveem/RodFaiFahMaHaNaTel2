@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/confirm_screen.dart';
 import 'package:http/http.dart' as http;
-
 
 class MatchingScreen extends StatefulWidget {
   @override
@@ -52,8 +50,14 @@ class _MatchingScreenState extends State<MatchingScreen> {
     String stationName = '" สยาม "';
     String detail2 = 'เลือกสถานีปลายทาง';
 
+    TextStyle buttonConfirmTextStyle = new TextStyle (
+      fontSize: 20.0,
+      fontWeight: FontWeight.w400,
+      color: Colors.white,
+    );
+
     Widget buttonAccept = new RaisedButton(
-      child: Text('จับคู่'),
+      child: Text('จับคู่', style: buttonConfirmTextStyle),
       color: Colors.blue,
       onPressed: (){
         Navigator.push(
