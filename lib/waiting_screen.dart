@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/matching_screen.dart';
-
+import 'package:RodFaiFah/map_util.dart';
+import 'package:map_view/map_view.dart';
+const API_KEY = "AIzaSyBOuG9Q-whmF3PApyDtUqeQ1GMKVZKvEhA";
 class WaitingScreen extends StatefulWidget {
   @override
   _WaitingScreenState createState() => _WaitingScreenState();
 }
 
 class _WaitingScreenState extends State<WaitingScreen> {
+
+  MapView mapView;
+  MapUtil mapUtil;
+
   @override
   void initState() {
     super.initState();
+    MapView.setApiKey(API_KEY);
+    mapUtil = new MapUtil();
+    mapUtil.init();
+    mapView = new MapView();
   }
 
   @override
@@ -24,7 +34,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
     );
-    
+
     TextStyle detailStyle = new TextStyle(
       fontWeight: FontWeight.bold,
     );
@@ -54,7 +64,12 @@ class _WaitingScreenState extends State<WaitingScreen> {
           children: [
             Text(blankLine),
             Text(detail1, style: titleStyle),
-            Image.asset('images/test.png', scale: 0.5),
+            new GestureDetector(
+                onTap: () => mapUtil.showMap(mapView),
+                child: new Center(
+                  child: new Image.asset('images/test.png', scale: 0.5),
+                ),
+              ),
             Text(detail2, style: detailStyle),
             Text(stationName, style: stationStyle),
             Text(blankLine),
