@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/matching_screen.dart';
-
+import 'package:RodFaiFah/map_util.dart';
+import 'package:map_view/map_view.dart';
+const API_KEY = "AIzaSyBOuG9Q-whmF3PApyDtUqeQ1GMKVZKvEhA";
 class WaitingScreen extends StatefulWidget {
   @override
   _WaitingScreenState createState() => _WaitingScreenState();
 }
 
 class _WaitingScreenState extends State<WaitingScreen> {
+
+  MapView mapView;
+  MapUtil mapUtil;
+
   @override
   void initState() {
     super.initState();
+    MapView.setApiKey(API_KEY);
+    mapUtil = new MapUtil();
+    mapUtil.init();
+    mapView = new MapView();
   }
 
   @override
@@ -100,6 +110,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
         margin: new EdgeInsets.all(20.0),
         child: new Column(
           children: [
+<<<<<<< HEAD
             Expanded(
               child: new Card(
                 child: new Column(
@@ -131,6 +142,20 @@ class _WaitingScreenState extends State<WaitingScreen> {
               height: 45.0,
               child: buttonCancel,
             ),
+=======
+            Text(blankLine),
+            Text(detail1, style: titleStyle),
+            new GestureDetector(
+                onTap: () => mapUtil.showMap(mapView),
+                child: new Center(
+                  child: new Image.asset('images/test.png', scale: 0.5),
+                ),
+              ),
+            Text(detail2, style: detailStyle),
+            Text(stationName, style: stationStyle),
+            Text(blankLine),
+            buttonCancel
+>>>>>>> 1a4703da2ee317ada5d00fd1eef78e0978161b7d
           ],
         ),
       ),
