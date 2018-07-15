@@ -68,21 +68,41 @@ class _MatchingScreenState extends State<MatchingScreen> {
     // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
     var client = new http.Client();
     var response = await client.get(url);
+    var matched = false;
 
     if (response.statusCode == 200) {
       print("source: ${this.source}");
       print("destination: ${destination}");
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => new ConfirmScreen(
-          sid: "2",
-          did: "3",
-          station: "อโศก", 
-          ticket: "เอกมัย", 
-          price: 43
-        )),
-      );
+      if (matched) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => new ConfirmScreen(
+            sid: "2",
+            did: "3",
+            station: "อโศก", 
+            ticket: "เอกมัย", 
+            source: this.source,
+            destination: destination,
+            price: 43,
+            matched: true,
+          )),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => new ConfirmScreen(
+            sid: null,
+            did: null,
+            station: "........", 
+            ticket: "........", 
+            source: this.source,
+            destination: destination,
+            price: 0,
+            matched: false,
+          )),
+        );
+      }
     }
   }
 
