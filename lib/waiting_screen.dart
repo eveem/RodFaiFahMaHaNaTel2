@@ -1,7 +1,10 @@
+import 'dart:async';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/matching_screen.dart';
 import 'package:RodFaiFah/map_util.dart';
 import 'package:map_view/map_view.dart';
+
 const API_KEY = "AIzaSyBOuG9Q-whmF3PApyDtUqeQ1GMKVZKvEhA";
 class WaitingScreen extends StatefulWidget {
   String station;
@@ -16,6 +19,7 @@ class WaitingScreen extends StatefulWidget {
 }
 
 class _WaitingScreenState extends State<WaitingScreen> {
+  String imagePath = 'images/test.png';
 
   MapView mapView;
   MapUtil mapUtil;
@@ -27,6 +31,34 @@ class _WaitingScreenState extends State<WaitingScreen> {
     mapUtil = new MapUtil();
     mapUtil.init();
     mapView = new MapView();
+
+    new Timer.periodic(const Duration(seconds: 3), (Timer t) => setImage());
+  }
+
+  Future<dynamic> setImage() async {
+    print('setImages');
+    
+    final url = "http://192.168.1.96:3001/api/healthcheck";
+    // final url = "http://localhost:3001/tracking";
+    var client = new http.Client();
+    var response = await client.post(url, body: { "id": "1", "station": "อโศก" });
+
+    // if (response.statusCode == 200) {
+    //   // print(source);
+    //   // print(destination);
+
+    //   // setState(() {
+    //   //   source = "อโศก";
+    //   // });
+
+    //   // setState(() {
+    //   //   source = "อโศก";      
+    //   // });
+    // }
+
+    setState(() {
+      imagePath = "images/test.png";    
+    });
   }
 
   @override
@@ -35,6 +67,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
     String detail1 = 'คู่ของคุณอยู่ที่';
     String detail2 = 'จุดนัดพบอยู่ที่สถานี';
     String stationName = '" ${widget.station} "';
+    
     
     void _showDialog() {
       showDialog(
@@ -117,7 +150,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
                     new GestureDetector(
                       onTap: () => mapUtil.showMap(mapView),
                       child: new Center(
-                        child: new Image.asset('images/test.png', height: 200.0),
+                        child: new Image.asset(imagePath, height: 200.0),
                       ),
                     ),
                     Container(
