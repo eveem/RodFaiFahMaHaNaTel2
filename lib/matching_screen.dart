@@ -54,7 +54,7 @@ class _MatchingScreenState extends State<MatchingScreen> {
     destination = stations.elementAt(0);
     source = "อุดมสุข";
 
-    new Timer.periodic(const Duration(seconds: 3), (Timer t) => setStation());
+    new Timer.periodic(const Duration(seconds: 1), (Timer t) => setStation());
   }
 
   void _onChange(String value) {
@@ -111,10 +111,6 @@ class _MatchingScreenState extends State<MatchingScreen> {
       source = "อโศก";      
     });
   }
-
-  // startTimeout() {
-  //   return new Timer(const Duration(seconds: 3), setStation);
-  // }
   
   Widget build(BuildContext context) {
     String appTitle = "RodFaiFahMaHaNaTel2 ❤";

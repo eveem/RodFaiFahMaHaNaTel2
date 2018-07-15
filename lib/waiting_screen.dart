@@ -19,7 +19,7 @@ class WaitingScreen extends StatefulWidget {
 }
 
 class _WaitingScreenState extends State<WaitingScreen> {
-  String imagePath = 'images/test.png';
+  String imagePath = 'images/h.png';
 
   MapView mapView;
   MapUtil mapUtil;
@@ -32,7 +32,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
     mapUtil.init();
     mapView = new MapView();
 
-    new Timer.periodic(const Duration(seconds: 3), (Timer t) => setImage());
+    new Timer.periodic(const Duration(seconds: 1), (Timer t) => setImage());
   }
 
   Future<dynamic> setImage() async {
@@ -56,8 +56,10 @@ class _WaitingScreenState extends State<WaitingScreen> {
     //   // });
     // }
 
+    var name = 'c';
+
     setState(() {
-      imagePath = "images/test.png";    
+      imagePath = "images/${name}.png";
     });
   }
 
@@ -147,10 +149,13 @@ class _WaitingScreenState extends State<WaitingScreen> {
                       margin: new EdgeInsets.only(top: 5.0),
                     ),
                     Text(detail1, style: textStyle),
-                    new GestureDetector(
-                      onTap: () => mapUtil.showMap(mapView),
-                      child: new Center(
-                        child: new Image.asset(imagePath, height: 200.0),
+                    Card(
+                      margin: new EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0, bottom: 20.0),
+                      child: new GestureDetector(
+                        onTap: () => mapUtil.showMap(mapView),
+                        child: new Center(
+                          child: new Image.asset(imagePath, height: 200.0),
+                        ),
                       ),
                     ),
                     Container(
