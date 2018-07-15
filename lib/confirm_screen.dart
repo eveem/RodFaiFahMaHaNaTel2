@@ -6,6 +6,7 @@ class ConfirmScreen extends StatefulWidget {
   final String sid;
   final String did;
   final String station;
+  final String ticket;
   final int price;
 
   ConfirmScreen({
@@ -13,6 +14,7 @@ class ConfirmScreen extends StatefulWidget {
     this.sid,
     this.did,
     this.station,
+    this.ticket,
     this.price,
   }) : super(key: key);
 
@@ -29,10 +31,12 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   @override
   Widget build(BuildContext context) {
     String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
-    String text1 = 'จุดนัดพบอยู่ที่สถานี';
-    String text2 = '\" ${widget.station} \"';
-    String text3 = 'คุณประหยัดไปได้';
-    String text4 = '${widget.price} บาท';
+    String text1 = 'คุณต้องซื้อตั๋วสถานี';
+    String text2 = '\" ${widget.ticket} \"';
+    String text3 = 'จุดนัดพบอยู่ที่สถานี';
+    String text4 = '\" ${widget.station} \"';
+    String text5 = 'คุณประหยัดไปได้';
+    String text6 = '${widget.price} บาท';
     
     TextStyle appTitleStyle = new TextStyle (
       fontSize: 20.0,
@@ -73,7 +77,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
       onPressed: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => new WaitingScreen()),
+          MaterialPageRoute(builder: (context) => new WaitingScreen(station: widget.station)),
         );
       },
     );
@@ -105,7 +109,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                 child: new Column(
                   children: [
                     Container(
-                      margin: new EdgeInsets.only(top: 60.0),
+                      margin: new EdgeInsets.only(top: 40.0),
                     ),
                     Text(text1, style: appTextStyle),
                     Container(
@@ -113,13 +117,21 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                     ),
                     Text(text2, style: appValueStyle),
                     Container(
-                      margin: new EdgeInsets.only(top: 50.0),
+                      margin: new EdgeInsets.only(top: 30.0),
                     ),
                     Text(text3, style: appTextStyle),
                     Container(
                       margin: new EdgeInsets.only(top: 10.0),
                     ),
                     Text(text4, style: appValueStyle),
+                    Container(
+                      margin: new EdgeInsets.only(top: 30.0),
+                    ),
+                    Text(text5, style: appTextStyle),
+                    Container(
+                      margin: new EdgeInsets.only(top: 10.0),
+                    ),
+                    Text(text6, style: appValueStyle),
                     Container(
                       margin: new EdgeInsets.only(top: 10.0),
                     ),

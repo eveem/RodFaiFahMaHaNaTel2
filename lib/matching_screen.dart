@@ -53,6 +53,8 @@ class _MatchingScreenState extends State<MatchingScreen> {
     
     destination = stations.elementAt(0);
     source = "อุดมสุข";
+
+    new Timer.periodic(const Duration(seconds: 3), (Timer t) => setStation());
   }
 
   void _onChange(String value) {
@@ -77,6 +79,7 @@ class _MatchingScreenState extends State<MatchingScreen> {
           sid: "2",
           did: "3",
           station: "อโศก", 
+          ticket: "เอกมัย", 
           price: 43
         )),
       );
@@ -89,18 +92,30 @@ class _MatchingScreenState extends State<MatchingScreen> {
     final url = "http://192.168.1.96:3001/api/healthcheck";
     // final url = "http://localhost:3001/tracking";
     var client = new http.Client();
-    var response = await client.post(url, body: { "id": 1, "station": "อโศก" });
+    var response = await client.post(url, body: { "id": "1", "station": "อโศก" });
 
-    if (response.statusCode == 200) {
-      print(source);
-      print(destination);
+    // if (response.statusCode == 200) {
+    //   // print(source);
+    //   // print(destination);
 
-      setState(() {
-        source = "อโศก";
-      });
-    }
+    //   // setState(() {
+    //   //   source = "อโศก";
+    //   // });
+
+    //   // setState(() {
+    //   //   source = "อโศก";      
+    //   // });
+    // }
+
+    setState(() {
+      source = "อโศก";      
+    });
   }
 
+  // startTimeout() {
+  //   return new Timer(const Duration(seconds: 3), setStation);
+  // }
+  
   Widget build(BuildContext context) {
     String appTitle = "RodFaiFahMaHaNaTel2 ❤";
     String detail1 = "ตอนนี้คุณอยู่สถานี";

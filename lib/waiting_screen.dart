@@ -4,6 +4,13 @@ import 'package:RodFaiFah/map_util.dart';
 import 'package:map_view/map_view.dart';
 const API_KEY = "AIzaSyBOuG9Q-whmF3PApyDtUqeQ1GMKVZKvEhA";
 class WaitingScreen extends StatefulWidget {
+  String station;
+
+  WaitingScreen({
+    Key key,
+    this.station,
+  }) : super(key: key);
+
   @override
   _WaitingScreenState createState() => _WaitingScreenState();
 }
@@ -25,9 +32,9 @@ class _WaitingScreenState extends State<WaitingScreen> {
   @override
   Widget build(BuildContext context) {
     String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
-    String detail1 = 'คู่ของคุณอยู่ที่สถานี';
-    String detail2 = 'จุดนัดพบสถานี';
-    String stationName = '" อารีย์ "';
+    String detail1 = 'คู่ของคุณอยู่ที่';
+    String detail2 = 'จุดนัดพบอยู่ที่สถานี';
+    String stationName = '" ${widget.station} "';
     
     void _showDialog() {
       showDialog(
@@ -89,12 +96,6 @@ class _WaitingScreenState extends State<WaitingScreen> {
       child: Text('แลกเปลี่ยนสำเร็จ', style: buttonConfirmTextStyle),
       color: Colors.blue,
       onPressed: _showDialog,
-      // onPressed: (){
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => MatchingScreen()),
-      //   );
-      // },
     );
 
     return Scaffold(
@@ -118,6 +119,9 @@ class _WaitingScreenState extends State<WaitingScreen> {
                       child: new Center(
                         child: new Image.asset('images/test.png', height: 200.0),
                       ),
+                    ),
+                    Container(
+                      margin: new EdgeInsets.only(top: 20.0),
                     ),
                     Text(detail2, style: textStyle),
                     Text(stationName, style: stationStyle),
