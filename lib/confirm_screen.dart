@@ -7,8 +7,10 @@ import 'package:http/http.dart' as http;
 
 class ConfirmScreen extends StatefulWidget {
   final String sid;
-  final String did;
+  
+  String did;
   String station = 'N/A';
+
   final String source;
   final String destination;
   String ticket = 'N/A';
@@ -65,6 +67,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
         widget.ticket = result['buy_destination'];
         widget.station = result['meeting_station'];
         widget.price = 47;
+        widget.did = result['matched_user_id'];
       });
 
       timer.cancel();

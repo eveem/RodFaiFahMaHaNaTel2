@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/matching_screen.dart';
@@ -23,6 +25,7 @@ class WaitingScreen extends StatefulWidget {
 }
 
 class _WaitingScreenState extends State<WaitingScreen> {
+  List<String> listStation;
   String imagePath = 'images/h.png';
 
   MapView mapView;
@@ -36,7 +39,42 @@ class _WaitingScreenState extends State<WaitingScreen> {
     mapUtil.init();
     mapView = new MapView();
 
-    new Timer.periodic(const Duration(seconds: 2), (Timer t) {
+    listStation = new List<String>();
+    listStation.addAll([
+      "หมอชิต",
+      "สะพานควาย",
+      "อารีย์",
+      "สนามเป้า",
+      "อนุสาวรีย์ชัยสมรภูมิ",
+      "พญาไท",
+      "ราชเทวี",
+      "สยาม",
+      "ชิดลม",
+      "เพลินจิต",
+      "นานา",
+      "อโศก",
+      "พร้อมพงษ์",
+      "ทองหล่อ",
+      "เอกมัย",
+      "พระโขนง",
+      "อ่อนนุช",
+      "บางจาก",
+      "ปุณณวิถี",
+      "อุดมสุข",
+      "บางนา",
+      "แบริ่ง",
+      "สำโรง",
+      "สนามกีฬาแห่งชาติ",
+      "ราชดำริ",
+      "ศาลาแดง",
+      "ช่องนนทรี",
+      "สุรศักดิ์",
+      "สะพานตากสิน",
+      "กรุงธนบุรี",
+      "วงเวียนใหญ่",
+    ]);
+
+    new Timer.periodic(const Duration(seconds: 5), (Timer t) {
       setStation();
       setImage();
     });
@@ -48,55 +86,45 @@ class _WaitingScreenState extends State<WaitingScreen> {
     print('Source ID: ${widget.sid}');
     print('Destination ID: ${widget.did}');
     
-    final url = "http://192.168.180.251:3001/api/healthcheck";
-    // final url = "http://17ed1999.ap.ngrok.io/tracking/";
+    final url = "http://17ed1999.ap.ngrok.io/tracking/${widget.did}";
     var client = new http.Client();
-    var response = await client.post(url, body: { "id": "1", "station": "อโศก" });
-
-    // if (response.statusCode == 200) {
-    //   // print(source);
-    //   // print(destination);
-
-    //   // setState(() {
-    //   //   source = "อโศก";
-    //   // });
-
-    //   // setState(() {
-    //   //   source = "อโศก";      
-    //   // });
-    // }
-
-    var name = 'c';
+    var response = await client.get(url);
+    var result = json.decode(response.body);
+    var picName = result['station'];
+    
+    print('result');
+    print(result);
+    
+    print('picName');
+    print(picName);
 
     setState(() {
-      imagePath = "images/${name}.png";
+      imagePath = "images/${picName}.png";
     });
   }
 
   Future<dynamic> setStation() async {
     print('WAITING => setStation');
+
+    // final url = "http://17ed1999.ap.ngrok.io/tracking/${widget.did}";
+    // var data = {
+    //   "id": widget.sid,
+    // };
     
-    final url = "http://192.168.180.251:3001/api/healthcheck";
-    // final url = "http://localhost:3001/tracking";
+    // var client = new http.Client();
+    // var response = await client.post(url, { data: data });
+
+    final _random = new Random();
+
+    final url = "http://17ed1999.ap.ngrok.io/tracking/${widget.sid}";
+    final body = {
+      "station": listStation[_random.nextInt(listStation.length)],
+    };
+    
     var client = new http.Client();
-    var response = await client.post(url, body: { "id": "1", "station": "อโศก" });
+    var response = await client.post(url, body: body);
 
-    // if (response.statusCode == 200) {
-    //   // print(source);
-    //   // print(destination);
-
-    //   // setState(() {
-    //   //   source = "อโศก";
-    //   // });
-
-    //   // setState(() {
-    //   //   source = "อโศก";      
-    //   // });
-    // }
-
-    // setState(() {
-    //   source = "อโศก";      
-    // });
+    var result = json.decode(response.body);
   }
 
   @override
