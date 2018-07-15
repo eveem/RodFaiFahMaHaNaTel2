@@ -32,13 +32,16 @@ class _WaitingScreenState extends State<WaitingScreen> {
     mapUtil.init();
     mapView = new MapView();
 
-    new Timer.periodic(const Duration(seconds: 1), (Timer t) => setImage());
+    new Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      setStation();
+      setImage();
+    });
   }
 
   Future<dynamic> setImage() async {
-    print('setImages');
+    print('WAITING => setImages');
     
-    final url = "http://192.168.1.96:3001/api/healthcheck";
+    final url = "http://192.168.180.251:3001/api/healthcheck";
     // final url = "http://localhost:3001/tracking";
     var client = new http.Client();
     var response = await client.post(url, body: { "id": "1", "station": "อโศก" });
@@ -61,6 +64,32 @@ class _WaitingScreenState extends State<WaitingScreen> {
     setState(() {
       imagePath = "images/${name}.png";
     });
+  }
+
+  Future<dynamic> setStation() async {
+    print('WAITING => setStation');
+    
+    final url = "http://192.168.180.251:3001/api/healthcheck";
+    // final url = "http://localhost:3001/tracking";
+    var client = new http.Client();
+    var response = await client.post(url, body: { "id": "1", "station": "อโศก" });
+
+    // if (response.statusCode == 200) {
+    //   // print(source);
+    //   // print(destination);
+
+    //   // setState(() {
+    //   //   source = "อโศก";
+    //   // });
+
+    //   // setState(() {
+    //   //   source = "อโศก";      
+    //   // });
+    // }
+
+    // setState(() {
+    //   source = "อโศก";      
+    // });
   }
 
   @override

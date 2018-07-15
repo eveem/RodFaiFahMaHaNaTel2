@@ -44,7 +44,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   void getMatching(String destination, Timer timer) async {
     print('getMatching');
     
-    final url = "http://192.168.1.96:3001/api/healthcheck";
+    final url = "http://192.168.180.251:3001/api/healthcheck";
     // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
     var client = new http.Client();
     var response = await client.get(url);

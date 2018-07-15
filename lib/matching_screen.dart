@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/confirm_screen.dart';
 import 'package:http/http.dart' as http;
@@ -52,9 +53,9 @@ class _MatchingScreenState extends State<MatchingScreen> {
     ]);
     
     destination = stations.elementAt(0);
-    source = "อุดมสุข";
 
-    new Timer.periodic(const Duration(seconds: 1), (Timer t) => setStation());
+    final _random = new Random();
+    source = stations[_random.nextInt(stations.length)];
   }
 
   void _onChange(String value) {
@@ -64,7 +65,9 @@ class _MatchingScreenState extends State<MatchingScreen> {
   }
 
   void getMatching(String destination) async {
-    final url = "http://192.168.1.96:3001/api/healthcheck";
+    print('MATCHING => getMatching');
+
+    final url = "http://192.168.180.251:3001/api/healthcheck";
     // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
     var client = new http.Client();
     var response = await client.get(url);
@@ -104,32 +107,6 @@ class _MatchingScreenState extends State<MatchingScreen> {
         );
       }
     }
-  }
-
-  Future<dynamic> setStation() async {
-    print('setStation');
-    
-    final url = "http://192.168.1.96:3001/api/healthcheck";
-    // final url = "http://localhost:3001/tracking";
-    var client = new http.Client();
-    var response = await client.post(url, body: { "id": "1", "station": "อโศก" });
-
-    // if (response.statusCode == 200) {
-    //   // print(source);
-    //   // print(destination);
-
-    //   // setState(() {
-    //   //   source = "อโศก";
-    //   // });
-
-    //   // setState(() {
-    //   //   source = "อโศก";      
-    //   // });
-    // }
-
-    setState(() {
-      source = "อโศก";      
-    });
   }
   
   Widget build(BuildContext context) {
