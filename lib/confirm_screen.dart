@@ -1,21 +1,29 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/matching_screen.dart';
 import 'package:RodFaiFah/waiting_screen.dart';
+import 'package:http/http.dart' as http;
 
 class ConfirmScreen extends StatefulWidget {
   final String sid;
   final String did;
-  final String station;
-  final String ticket;
-  final int price;
+  String station = 'N/A';
+  final String source;
+  final String destination;
+  String ticket = 'N/A';
+  int price = 0;
+  final bool matched;
 
   ConfirmScreen({
     Key key,
     this.sid,
     this.did,
+    this.source,
+    this.destination,
     this.station,
     this.ticket,
     this.price,
+    this.matched,
   }) : super(key: key);
 
   @override
@@ -26,6 +34,45 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   @override
   void initState() {
     super.initState();
+    Timer timer;
+
+    if (!widget.matched) {
+      timer = new Timer.periodic(const Duration(seconds: 1), (Timer t) => getMatching(widget.destination, t));
+    }
+  }
+
+  void getMatching(String destination, Timer timer) async {
+    print('getMatching');
+    
+    final url = "http://192.168.1.96:3001/api/healthcheck";
+    // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
+    var client = new http.Client();
+    var response = await client.get(url);
+
+    if (response.statusCode == 200) {
+      // print("source: ${this.source}");
+      // print("destination: ${destination}");
+
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => new ConfirmScreen(
+      //     sid: "2",
+      //     did: "3",
+      //     station: "อโศก", 
+      //     ticket: "เอกมัย", 
+      //     price: 43,
+      //     matched: false,
+      //   )),
+      // );
+
+      setState(() {
+        widget.ticket = "เอกมัย";
+        widget.station = "อโศก";
+        widget.price = 45;
+      });
+
+      timer.cancel();
+    }
   }
 
   @override
@@ -37,7 +84,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     String text4 = '\" ${widget.station} \"';
     String text5 = 'คุณประหยัดไปได้';
     String text6 = '${widget.price} บาท';
-    
+
     TextStyle appTitleStyle = new TextStyle (
       fontSize: 20.0,
       fontWeight: FontWeight.w400,
