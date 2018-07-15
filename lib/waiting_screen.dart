@@ -32,7 +32,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
     mapUtil.init();
     mapView = new MapView();
 
-    new Timer.periodic(const Duration(seconds: 1), (Timer t) {
+    new Timer.periodic(const Duration(seconds: 2), (Timer t) {
       setStation();
       setImage();
     });

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/confirm_screen.dart';
@@ -13,6 +14,7 @@ class _MatchingScreenState extends State<MatchingScreen> {
   List<String> stations;
   String destination;
   String source;
+  String uid;
   
   @override
   void initState() {
@@ -64,48 +66,73 @@ class _MatchingScreenState extends State<MatchingScreen> {
     });
   }
 
+  void startMatching() async {
+    print('MATCHING => startMatching');
+    await createUser(destination);
+    await getMatching(destination);
+  }
+
+  void createUser(String destination) async {
+    print('MATCHING => createUser');
+
+    final url = "https://17ed1999.ap.ngrok.io/users";
+    final body = {
+      "source": source,
+      "destination": destination,
+    };
+
+    var client = new http.Client();
+    var response = await client.post(url, body: body);
+
+    var result = json.decode(response.body);
+    print(result['user']['id']);
+
+    setState(() {
+      uid = result['user']['id']; 
+    });
+  }
+
   void getMatching(String destination) async {
     print('MATCHING => getMatching');
 
-    final url = "http://192.168.180.251:3001/api/healthcheck";
-    // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
+    // final url = "http://192.168.180.251:3001/api/healthcheck";
+    final url = "http://17ed1999.ap.ngrok.io/matching";
+    final body = {
+      "id": uid,
+    };
+    
     var client = new http.Client();
-    var response = await client.get(url);
-    var matched = false;
+    var response = await client.post(url, body: body);
+    var result = json.decode(response.body);
 
-    if (response.statusCode == 200) {
-      print("source: ${this.source}");
-      print("destination: ${destination}");
-
-      if (matched) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => new ConfirmScreen(
-            sid: "2",
-            did: "3",
-            station: "อโศก", 
-            ticket: "เอกมัย", 
-            source: this.source,
-            destination: destination,
-            price: 43,
-            matched: true,
-          )),
-        );
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => new ConfirmScreen(
-            sid: null,
-            did: null,
-            station: "........", 
-            ticket: "........", 
-            source: this.source,
-            destination: destination,
-            price: 0,
-            matched: false,
-          )),
-        );
-      }
+    if (result != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => new ConfirmScreen(
+          sid: uid,
+          did: result['matched_user_id'],
+          station: result['meeting_station'], 
+          ticket: result['buy_destination'], 
+          source: this.source,
+          destination: destination,
+          price: 47,
+          matched: false,
+        )),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => new ConfirmScreen(
+          sid: uid,
+          did: null,
+          station: "........", 
+          ticket: "........", 
+          source: this.source,
+          destination: destination,
+          price: 0,
+          matched: false,
+        )),
+      );
     }
   }
   
@@ -124,7 +151,7 @@ class _MatchingScreenState extends State<MatchingScreen> {
     Widget buttonAccept = new RaisedButton(
       child: Text('จับคู่', style: buttonConfirmTextStyle),
       color: Colors.blue,
-      onPressed: (){ getMatching(destination); },
+      onPressed: startMatching,
     );
 
     TextStyle stationStyle = new TextStyle(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:RodFaiFah/matching_screen.dart';
 import 'package:RodFaiFah/waiting_screen.dart';
@@ -37,33 +38,28 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     Timer timer;
 
     if (!widget.matched) {
-      timer = new Timer.periodic(const Duration(seconds: 1), (Timer t) => getMatching(widget.destination, t));
+      timer = new Timer.periodic(const Duration(seconds: 3), (Timer t) => getMatching(widget.destination, t));
     }
   }
 
-  void getMatching(String destination, Timer timer) async {
-    print('getMatching');
+  void getMatching(String destination, timer) async {
+    print('CONFIRM => getMatching');
+
+    final url = "http://17ed1999.ap.ngrok.io/matching";
+
+    print('uid: ${widget.sid}');
+
+    final body = {
+      "id": widget.sid,
+    };
     
-    final url = "http://192.168.180.251:3001/api/healthcheck";
-    // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
     var client = new http.Client();
-    var response = await client.get(url);
+    var response = await client.post(url, body: body);
+    var result = json.decode(response.body);
+    
+    print('result: ${result}');
 
-    if (response.statusCode == 200) {
-      // print("source: ${this.source}");
-      // print("destination: ${destination}");
-
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => new ConfirmScreen(
-      //     sid: "2",
-      //     did: "3",
-      //     station: "อโศก", 
-      //     ticket: "เอกมัย", 
-      //     price: 43,
-      //     matched: false,
-      //   )),
-      // );
+    if (result != null) {
 
       setState(() {
         widget.ticket = "เอกมัย";
@@ -72,8 +68,58 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
       });
 
       timer.cancel();
+      
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => new ConfirmScreen(
+      //     sid: result['id'],
+      //     did: result['matched_user_id'],
+      //     station: result['meeting_station'], 
+      //     ticket: result['buy_destination'], 
+      //     source: this.source,
+      //     destination: destination,
+      //     price: 47,
+      //     matched: false,
+      //   )),
+      // );
     }
   }
+  
+  
+
+  // void getMatching(String destination, Timer timer) async {
+  //   print('getMatching');
+    
+  //   final url = "http://192.168.180.251:3001/api/healthcheck";
+  //   // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
+  //   var client = new http.Client();
+  //   var response = await client.get(url);
+
+  //   if (response.statusCode == 200) {
+  //     // print("source: ${this.source}");
+  //     // print("destination: ${destination}");
+
+  //     // Navigator.push(
+  //     //   context,
+  //     //   MaterialPageRoute(builder: (context) => new ConfirmScreen(
+  //     //     sid: "2",
+  //     //     did: "3",
+  //     //     station: "อโศก", 
+  //     //     ticket: "เอกมัย", 
+  //     //     price: 43,
+  //     //     matched: false,
+  //     //   )),
+  //     // );
+
+  //     setState(() {
+  //       widget.ticket = "เอกมัย";
+  //       widget.station = "อโศก";
+  //       widget.price = 45;
+  //     });
+
+  //     timer.cancel();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
