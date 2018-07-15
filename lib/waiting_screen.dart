@@ -7,11 +7,15 @@ import 'package:map_view/map_view.dart';
 
 const API_KEY = "AIzaSyBOuG9Q-whmF3PApyDtUqeQ1GMKVZKvEhA";
 class WaitingScreen extends StatefulWidget {
-  String station;
+  final String station;
+  final String sid;
+  final String did;
 
   WaitingScreen({
     Key key,
     this.station,
+    this.sid,
+    this.did,
   }) : super(key: key);
 
   @override
@@ -40,9 +44,12 @@ class _WaitingScreenState extends State<WaitingScreen> {
 
   Future<dynamic> setImage() async {
     print('WAITING => setImages');
+
+    print('Source ID: ${widget.sid}');
+    print('Destination ID: ${widget.did}');
     
     final url = "http://192.168.180.251:3001/api/healthcheck";
-    // final url = "http://localhost:3001/tracking";
+    // final url = "http://17ed1999.ap.ngrok.io/tracking/";
     var client = new http.Client();
     var response = await client.post(url, body: { "id": "1", "station": "อโศก" });
 

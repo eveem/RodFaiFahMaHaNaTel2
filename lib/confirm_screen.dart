@@ -62,65 +62,15 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     if (result != null) {
 
       setState(() {
-        widget.ticket = "เอกมัย";
-        widget.station = "อโศก";
-        widget.price = 45;
+        widget.ticket = result['buy_destination'];
+        widget.station = result['meeting_station'];
+        widget.price = 47;
       });
 
       timer.cancel();
-      
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => new ConfirmScreen(
-      //     sid: result['id'],
-      //     did: result['matched_user_id'],
-      //     station: result['meeting_station'], 
-      //     ticket: result['buy_destination'], 
-      //     source: this.source,
-      //     destination: destination,
-      //     price: 47,
-      //     matched: false,
-      //   )),
-      // );
     }
   }
   
-  
-
-  // void getMatching(String destination, Timer timer) async {
-  //   print('getMatching');
-    
-  //   final url = "http://192.168.180.251:3001/api/healthcheck";
-  //   // final url = "http://localhost:3001/matching?s="${source}"&d="${destination}"";
-  //   var client = new http.Client();
-  //   var response = await client.get(url);
-
-  //   if (response.statusCode == 200) {
-  //     // print("source: ${this.source}");
-  //     // print("destination: ${destination}");
-
-  //     // Navigator.push(
-  //     //   context,
-  //     //   MaterialPageRoute(builder: (context) => new ConfirmScreen(
-  //     //     sid: "2",
-  //     //     did: "3",
-  //     //     station: "อโศก", 
-  //     //     ticket: "เอกมัย", 
-  //     //     price: 43,
-  //     //     matched: false,
-  //     //   )),
-  //     // );
-
-  //     setState(() {
-  //       widget.ticket = "เอกมัย";
-  //       widget.station = "อโศก";
-  //       widget.price = 45;
-  //     });
-
-  //     timer.cancel();
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     String appTitle = 'RodFaiFahMaHaNaTel2 ❤';
@@ -170,7 +120,11 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
       onPressed: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => new WaitingScreen(station: widget.station)),
+          MaterialPageRoute(builder: (context) => new WaitingScreen(
+            station: widget.station, 
+            sid: widget.sid,
+            did: widget.did,
+          )),
         );
       },
     );
